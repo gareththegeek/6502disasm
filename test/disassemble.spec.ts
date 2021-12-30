@@ -155,4 +155,141 @@ describe('disassemble', () => {
             }
         })
     })
+
+    it('handles branches', async () => {
+        const rom = await fs.readFile(path.join(__dirname, './sources/bin/branches.bin'))
+        const actual = disassemble([...rom], 0xf000)
+
+        expect(actual).toEqual({
+            0xf000: {
+                address: 0xf000,
+                mnemonic: 'bvs',
+                operand: 0xf006,
+                mode: AddressMode.Relative,
+                size: 2
+            },
+            0xf002: {
+                address: 0xf002,
+                mnemonic: 'jmp',
+                operand: 0xf007,
+                mode: AddressMode.Absolute,
+                size: 3
+            },
+            // nop is omitted
+            0xf006: {
+                address: 0xf006,
+                mnemonic: 'lsr',
+                operand: undefined,
+                mode: AddressMode.Accumulator,
+                size: 1
+            },
+            0xf007: {
+                address: 0xf007,
+                mnemonic: 'lda',
+                operand: 0x00,
+                mode: AddressMode.Immediate,
+                size: 2
+            },
+            0xf009: {
+                address: 0xf009,
+                mnemonic: 'bcc',
+                operand: 0xf000,
+                mode: AddressMode.Relative,
+                size: 2
+            },
+            0xf00b: {
+                address: 0xf00b,
+                mnemonic: 'inc',
+                operand: undefined,
+                mode: AddressMode.Accumulator,
+                size: 1
+            },
+            0xf00c: {
+                address: 0xf00c,
+                mnemonic: 'bne',
+                operand: 0xf018,
+                mode: AddressMode.Relative,
+                size: 2
+            },
+            0xf00e: {
+                address: 0xf00e,
+                mnemonic: 'dec',
+                operand: undefined,
+                mode: AddressMode.Accumulator,
+                size: 1
+            },
+            0xf00f: {
+                address: 0xf00f,
+                mnemonic: 'bcs',
+                operand: 0xf007,
+                mode: AddressMode.Relative,
+                size: 2
+            },
+            0xf011: {
+                address: 0xf011,
+                mnemonic: 'sta',
+                operand: 0x1234,
+                mode: AddressMode.Absolute,
+                size: 3
+            },
+            0xf014: {
+                address: 0xf014,
+                mnemonic: 'jsr',
+                operand: 0xf01c,
+                mode: AddressMode.Absolute,
+                size: 3
+            },
+            0xf017: {
+                address: 0xf017,
+                mnemonic: 'ror',
+                operand: undefined,
+                mode: AddressMode.Accumulator,
+                size: 1
+            },
+            0xf018: {
+                address: 0xf018,
+                mnemonic: 'jmp',
+                operand: 0xf018,
+                mode: AddressMode.Absolute,
+                size: 3
+            },
+            // nop omitted
+            0xf01c: {
+                address: 0xf01c,
+                mnemonic: 'pha',
+                operand: undefined,
+                mode: AddressMode.Stack,
+                size: 1
+            },
+            0xf01d: {
+                address: 0xf01d,
+                mnemonic: 'phx',
+                operand: undefined,
+                mode: AddressMode.Stack,
+                size: 1
+            },
+            0xf01e: {
+                address: 0xf01e,
+                mnemonic: 'rts',
+                operand: undefined,
+                mode: AddressMode.Stack,
+                size: 1
+            },
+            0xf01f: {
+                address: 0xf01f,
+                mnemonic: 'lda',
+                operand: 0xab,
+                mode: AddressMode.Immediate,
+                size: 2
+            },
+            0xf021: {
+                address: 0xf021,
+                mnemonic: 'rti',
+                operand: undefined,
+                mode: AddressMode.Stack,
+                size: 1
+            }
+            // nop omitted
+        })
+    })
 })
