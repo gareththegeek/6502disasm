@@ -7,7 +7,6 @@ export enum AddressMode {
     ZeroPageIndexed = '(zp),Y',
     ZeroPageIndirectX = '(zp,X)',
     ZeroPageX = 'zp,X',
-    ZeroPageY = 'zp,Y',
     AbsoluteX = 'a,X',
     AbsoluteY = 'a,Y',
     Relative = 'r',
